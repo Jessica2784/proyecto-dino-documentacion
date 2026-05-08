@@ -1,0 +1,397 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tcolorbox}
+
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\definecolor{dinoGreen}{RGB}{29,131,72}
+\definecolor{dinoGray}{RGB}{90,90,90}
+\definecolor{dinoLight}{RGB}{240,249,240}
+\definecolor{codebg}{RGB}{245,247,250}
+
+\setcounter{secnumdepth}{0}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=dinoGreen,
+    urlcolor=blue,
+    citecolor=dinoGreen,
+    pdftitle={Documentación Proyecto Dino App},
+    pdfauthor={Jessica Ayelen Vazquez Lopez}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{dinoGray}{Dino App}}
+\fancyhead[R]{\textcolor{dinoGray}{Principios de Diseño de Software}}
+\fancyfoot[C]{\textcolor{dinoGray}{\thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{dinoLight}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}
+  {\Large\bfseries\color{dinoGreen}}
+  {}
+  {0pt}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{dinoGreen}}
+  {}
+  {0pt}
+  {}
+
+\lstset{
+    language=Dart,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{dinoGreen}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{dinoLight},
+    breaklines=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    captionpos=b
+}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1.5cm}
+        {\Huge\bfseries\textcolor{dinoGreen}{Documento Técnico}}\\[1.5em]
+        {\LARGE\bfseries Proyecto Dino App}\\[2.5em]
+        \begin{tcolorbox}[colback=dinoLight,colframe=dinoGreen,width=\textwidth,boxrule=0.8pt]
+            \vspace{0.3cm}
+            \begin{tabular}{ll}
+                \textbf{Nombre del Proyecto:} & Aplicación de Gestión de Dinosaurios \\
+                \textbf{Nombre:} & Jessica Ayelen Vazquez Lopez \\
+                \textbf{Profesor:} & Adolfo Centeno Tellez \\
+                \textbf{Materia:} & Principios de diseño de software \\
+                \textbf{Fecha:} & 08/Mayo/2026 \\
+            \end{tabular}
+            \vspace{0.3cm}
+        \end{tcolorbox}
+        \vfill
+        {\large\textit{Desarrollo con Flutter, arquitectura limpia y patrones de diseño}}\\[1em]
+        \vfill
+    \end{center}
+\end{titlepage}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\section{Introducción}
+Esta aplicación móvil se creó para resolver el problema de gestionar datos de dinosaurios de forma organizada y moderna. En lugar de trabajar con estructuras fragmentadas o lógica mezclada, la aplicación utiliza una arquitectura limpia que separa claramente responsabilidades en servicios, modelos, providers y pantallas. El objetivo fue diseñar una solución que permita crear, visualizar, comentar y reaccionar a dinosaurios, con una base robusta que facilite mantenimiento y ampliaciones.
+
+\section{Objetivo General}
+Construir una aplicación móvil funcional y profesional para la gestión de dinosaurios, aplicando patrones de diseño que aseguren código reutilizable, fácil de mantener y extensible, mientras se emplea Flutter para ofrecer una experiencia uniforme en dispositivos móviles.
+
+\section{Objetivos Específicos}
+\begin{itemize}
+    \item Implementar autenticación con JWT para proteger el acceso a la app.
+    \item Desarrollar un sistema CRUD para dinosaurios.
+    \item Agregar comentarios y reacciones por dinosaurio.
+    \item Aplicar patrones de diseño creationales y estructurales para una arquitectura ordenada.
+    \item Utilizar Provider para la gestión reactiva del estado.
+    \item Diseñar una estructura de carpetas clara y modular.
+\end{itemize}
+
+\section{Análisis del Sistema}
+
+\subsection{Requerimientos Funcionales}
+\begin{itemize}
+    \item El usuario debe poder registrarse e iniciar sesión.
+    \item El usuario debe poder listar dinosaurios existentes.
+    \item El usuario debe poder crear nuevos dinosaurios.
+    \item El usuario debe poder eliminar dinosaurios.
+    \item El usuario debe poder agregar comentarios a un dinosaurio.
+    \item El usuario debe poder reaccionar a dinosaurios y comentarios.
+\end{itemize}
+
+\subsection{Requerimientos No Funcionales}
+\begin{itemize}
+    \item La aplicación debe ser responsiva en Android e iOS.
+    \item El sistema debe manejar errores de red y mostrar mensajes claros.
+    \item El rendimiento debe ser ágil en las operaciones comunes.
+    \item La seguridad debe garantizar almacenamiento seguro de tokens JWT.
+    \item El código debe ser modular y fácil de escalar.
+\end{itemize}
+
+\section{Arquitectura y Stack Tecnológico}
+
+\subsection{Tecnologías Utilizadas}
+\begin{itemize}
+    \item \textbf{Lenguaje:} Dart
+    \item \textbf{Framework:} Flutter
+    \item \textbf{Backend:} API REST propia
+    \item \textbf{Gestión de estado:} Provider
+    \item \textbf{Almacenamiento local:} SharedPreferences
+    \item \textbf{Cliente HTTP:} Paquete \texttt{http}
+\end{itemize}
+
+\subsection{Arquitectura de Carpetas}
+La aplicación está organizada en módulos claros:
+\begin{itemize}
+    \item \texttt{core/} — patrones de diseño, gestión HTTP y facades.
+    \item \texttt{models/} — entidades de dominio como \texttt{Dinosaurio} y \texttt{Comentario}.
+    \item \texttt{repositories/} — interfaces que abstraen el acceso a datos.
+    \item \texttt{services/} — servicios Singleton que encapsulan la lógica de negocio.
+    \item \texttt{providers/} — administración de estado con ChangeNotifier.
+    \item \texttt{screens/} — las vistas de la aplicación.
+\end{itemize}
+Esta organización demuestra disciplina en el desarrollo y facilita encontrar cada responsabilidad.
+
+\section{Patrones de Diseño}
+
+\subsection{Singleton}
+\textbf{Para qué sirve:} Garantiza una sola instancia de una clase a lo largo de la aplicación, evitando instancias duplicadas y compartiendo estado global de forma controlada.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{services/auth_service.dart}
+    \item \texttt{services/dino_service.dart}
+    \item \texttt{core/facades/app_facade.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+class AuthService {
+  static final AuthService _instance = AuthService._internal();
+  factory AuthService() => _instance;
+  AuthService._internal();
+
+  Future<bool> login(String username, String password) async {
+    // ...
+  }
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Asegura que sólo exista una instancia de \texttt{AuthService}.
+    \item Centraliza la lógica de autenticación.
+    \item Evita inconsistencias al acceder a token y username.
+\end{itemize}
+
+\subsection{Factory}
+\textbf{Para qué sirve:} Centraliza la creación de objetos complejos a partir de datos externos, especialmente JSON, realizando validaciones y conversiones.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{models/dinosaurio.dart}
+    \item \texttt{models/comentario.dart}
+    \item \texttt{models/auth_response.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+factory Dinosaurio.fromJson(Map<String, dynamic> json) {
+  return Dinosaurio(
+    id: json['id'] as int?,
+    nombre: json['nombre'] as String? ?? 'Sin nombre',
+    estaturaAprox: (json['estaturaAprox'] as num?)?.toDouble() ?? 0.0,
+    esperanzaVida: json['esperanzaVida'] as int? ?? 0,
+    alimentacion: json['alimentacion'] as String? ?? 'Desconocido',
+    imagenUrl: json['imagenUrl'] as String? ?? '',
+    likesCount: json['likesCount'] as int? ?? 0,
+    encantaCount: json['encantaCount'] as int? ?? 0,
+    divierteCount: json['divierteCount'] as int? ?? 0,
+    asombrosoCount: json['asombrosoCount'] as int? ?? 0,
+  );
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Convierte la respuesta del API en un objeto \texttt{Dinosaurio}.
+    \item Maneja valores nulos con defaults seguros.
+    \item Facilita el uso de datos JSON en el resto de la app.
+\end{itemize}
+
+\subsection{Builder}
+\textbf{Para qué sirve:} Permite construir objetos complejos paso a paso, manteniendo el código legible y validando campos antes de crear el objeto.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{models/dinosaurio.dart}
+    \item \texttt{models/comentario.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+class DinosaurioBuilder {
+  String _nombre = '';
+  double _estaturaAprox = 0.0;
+  int _esperanzaVida = 0;
+  String _alimentacion = '';
+  String _imagenUrl = '';
+
+  DinosaurioBuilder withNombre(String nombre) {
+    _nombre = nombre;
+    return this;
+  }
+
+  Dinosaurio build() {
+    if (_nombre.isEmpty) {
+      throw ArgumentError('El nombre del dinosaurio es requerido');
+    }
+    return Dinosaurio(
+      nombre: _nombre,
+      estaturaAprox: _estaturaAprox,
+      esperanzaVida: _esperanzaVida,
+      alimentacion: _alimentacion,
+      imagenUrl: _imagenUrl,
+    );
+  }
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Permite crear un dinosaurio de forma fluida.
+    \item Evita constructores con muchos parámetros posicionales.
+    \item Valida que el nombre sea obligatorio.
+\end{itemize}
+
+\subsection{Facade}
+\textbf{Para qué sirve:} Oculta la complejidad de múltiples servicios detrás de una única capa de acceso, facilitando el uso desde las pantallas.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{core/facades/app_facade.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+class AppFacade extends Facade {
+  Future<List<Dinosaurio>> getAllDinosaurios() async {
+    return _dinoService.getAll();
+  }
+
+  Future<bool> createDinosaurio(Dinosaurio dinosaurio) async {
+    return _dinoService.create(dinosaurio);
+  }
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Simplifica las llamadas de UI a través de un solo objeto global.
+    \item Separa el consumo de servicios de la presentación.
+    \item Mejora la mantenibilidad, porque la UI no necesita conocer cada servicio.
+\end{itemize}
+
+\subsection{Repository}
+\textbf{Para qué sirve:} Define contratos para el acceso a datos, separando la lógica de persistencia de la lógica de negocio.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{repositories/repository_interfaces.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+abstract class IDinoRepository {
+  Future<List<Dinosaurio>> getAll();
+  Future<bool> create(Dinosaurio dinosaurio);
+  Future<bool> delete(int dinoId);
+  Future<bool> toggleReaction(int dinoId, String reactionType);
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Permite cambiar la implementación de datos sin modificar consumidores.
+    \item Facilita el uso de mocks en pruebas.
+    \item Clarifica responsabilidades entre capa de datos y capa de negocio.
+\end{itemize}
+
+\subsection{Adapter}
+\textbf{Para qué sirve:} Normaliza datos de una fuente externa para que el resto de la app pueda trabajarlos en un formato consistente.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{core/http/http_manager.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+static Future<HttpResponse<T>> get<T>(
+  String endpoint, {
+  required T Function(Map<String, dynamic>) parser,
+  String? token,
+  Map<String, String>? extraHeaders,
+}) async {
+  final response = await http.get(
+    Uri.parse('$_baseUrl$endpoint'),
+    headers: _buildHeaders(token, extraHeaders),
+  );
+  return _handleResponse(response, parser);
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Toma respuestas HTTP y las transforma a objetos Dart.
+    \item Centraliza la construcción de encabezados y el manejo de excepciones.
+    \item Permite usar un parser genérico para cualquier modelo.
+\end{itemize}
+
+\subsection{Decorator}
+\textbf{Para qué sirve:} Agrega responsabilidades adicionales a objetos sin cambiar su implementación principal.
+
+\textbf{Dónde se usa:}
+\begin{itemize}
+    \item \texttt{core/patterns/decorator.dart}
+\end{itemize}
+
+\textbf{Ejemplo real usado en la app:}
+\begin{lstlisting}
+class LoggingDecorator<T> extends Decorator<T> {
+  Future<R> executeWithLogging<R>(
+    String operationName,
+    Future<R> Function() operation,
+  ) async {
+    final startTime = DateTime.now();
+    print('�� Iniciando: $operationName');
+    final result = await operation();
+    print('✅ Completado: $operationName');
+    return result;
+  }
+}
+\end{lstlisting}
+
+\textbf{Qué hace en esa parte:}
+\begin{itemize}
+    \item Permite agregar logging sin modificar la clase base.
+    \item Facilita medir tiempos de ejecución.
+    \item Mejora la capacidad de diagnóstico de la app.
+\end{itemize}
+
+\section{Conclusiones y Trabajo Futuro}
+
+\subsection{Retos Superados}
+El mayor reto fue aplicar patrones de diseño reales sin sacrificar la simplicidad de la aplicación. Se logró estructurar la app en capas limpias y coherentes, manteniendo el comportamiento funcional esperado en cada pantalla. Otro desafío importante fue integrar la gestión de estado con Provider de manera ordenada, lo cual se resolvió mediante providers dedicados para autenticación, dinosaurios y comentarios.
+
+\subsection{Mejoras Futuras}
+\begin{itemize}
+    \item Agregar modo oscuro con temas personalizados.
+    \item Implementar notificaciones push para actividad nueva.
+    \item Añadir soporte offline con caché local.
+    \item Desarrollar pruebas unitarias y de integración.
+    \item Integrar paginación y búsqueda avanzada en la lista de dinosaurios.
+\end{itemize}
+
+\end{document}
